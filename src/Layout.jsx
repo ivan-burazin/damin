@@ -1,18 +1,22 @@
 import React, { useState } from 'react';
 import ApiKeysDashboard from './ApiKeysDashboard';
 import WorkspacesDashboard from './WorkspacesDashboard';
+import GetStarted from './GetStarted';
 
 const MENU_ITEMS = {
+  GET_STARTED: 'getStarted',
   WORKSPACES: 'workspaces',
   API_KEYS: 'apiKeys',
   DOCS: 'docs'
 };
 
 export default function Layout({ onLogout }) {
-  const [activeMenu, setActiveMenu] = useState(MENU_ITEMS.WORKSPACES);
+  const [activeMenu, setActiveMenu] = useState(MENU_ITEMS.GET_STARTED);
 
   const renderContent = () => {
     switch (activeMenu) {
+      case MENU_ITEMS.GET_STARTED:
+        return <GetStarted />;
       case MENU_ITEMS.WORKSPACES:
         return <WorkspacesDashboard />;
       case MENU_ITEMS.API_KEYS:
@@ -27,25 +31,35 @@ export default function Layout({ onLogout }) {
   };
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-screen bg-[#0D0D0D] text-white">
       {/* Left Sidebar */}
-      <div className="w-64 bg-white border-r">
-        <div className="p-4 flex justify-between items-center">
-          <h2 className="text-lg font-semibold text-gray-900">Dashboard</h2>
+      <div className="w-64 bg-[#1A1A1A] border-r border-[#2A2A2A]">
+        <div className="p-4 flex justify-between items-center border-b border-[#2A2A2A]">
+          <h2 className="text-lg font-semibold">Dashboard</h2>
           <button
             onClick={onLogout}
-            className="text-sm text-red-600 hover:text-red-900"
+            className="text-sm text-red-500 hover:text-red-400"
           >
             Logout
           </button>
         </div>
         <nav className="mt-4">
           <button
+            onClick={() => setActiveMenu(MENU_ITEMS.GET_STARTED)}
+            className={`w-full px-4 py-2 text-left ${
+              activeMenu === MENU_ITEMS.GET_STARTED
+                ? 'bg-[#2A2A2A] text-[#00E599] border-r-4 border-[#00E599]'
+                : 'text-gray-300 hover:bg-[#2A2A2A]'
+            }`}
+          >
+            Get Started
+          </button>
+          <button
             onClick={() => setActiveMenu(MENU_ITEMS.WORKSPACES)}
             className={`w-full px-4 py-2 text-left ${
               activeMenu === MENU_ITEMS.WORKSPACES
-                ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-[#2A2A2A] text-[#00E599] border-r-4 border-[#00E599]'
+                : 'text-gray-300 hover:bg-[#2A2A2A]'
             }`}
           >
             Workspaces
@@ -54,15 +68,15 @@ export default function Layout({ onLogout }) {
             onClick={() => setActiveMenu(MENU_ITEMS.API_KEYS)}
             className={`w-full px-4 py-2 text-left ${
               activeMenu === MENU_ITEMS.API_KEYS
-                ? 'bg-blue-50 text-blue-700 border-r-4 border-blue-700'
-                : 'text-gray-600 hover:bg-gray-50'
+                ? 'bg-[#2A2A2A] text-[#00E599] border-r-4 border-[#00E599]'
+                : 'text-gray-300 hover:bg-[#2A2A2A]'
             }`}
           >
             API Keys
           </button>
           <button
             onClick={handleDocsClick}
-            className="w-full px-4 py-2 text-left text-gray-600 hover:bg-gray-50 flex items-center justify-between"
+            className="w-full px-4 py-2 text-left text-gray-300 hover:bg-[#2A2A2A] flex items-center justify-between"
           >
             <span>Docs</span>
             <svg 

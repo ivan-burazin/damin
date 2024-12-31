@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 
 const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-const apiUrl = "http://128.199.45.83:3986/apikey/";
+const apiUrl = "https://api-a0534c9b-df6d-40f5-8657-792993bc24ec.try-eu.daytona.app/apikey/";
+const baseUrl = apiUrl.replace('/apikey/', '');
 const fullUrl = `${proxyUrl}${apiUrl}`;
 
 const ApiKeysDashboard = () => {
@@ -115,47 +116,52 @@ const ApiKeysDashboard = () => {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">API Keys</h1>
-        <button
-          onClick={() => setIsCreateModalOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-        >
-          Create New API Key
-        </button>
+      <div className="flex flex-col mb-6">
+        <div className="flex justify-between items-center mb-2">
+          <h1 className="text-2xl font-bold text-white">API Keys</h1>
+          <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className="px-4 py-2 bg-[#00E599] text-black rounded hover:bg-[#00cc88] transition-colors"
+          >
+            Create New API Key
+          </button>
+        </div>
+        <div className="text-sm text-gray-400">
+          Server URL: <code className="bg-[#2A2A2A] px-2 py-1 rounded font-mono text-[#00E599]">{baseUrl}</code>
+        </div>
       </div>
 
       {isLoading ? (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#00E599]"></div>
         </div>
       ) : (
-        <div className="bg-white rounded-lg shadow overflow-hidden">
+        <div className="bg-[#1A1A1A] rounded-lg shadow-lg border border-[#2A2A2A] overflow-hidden">
           <table className="min-w-full">
-            <thead className="bg-gray-50">
+            <thead className="bg-[#2A2A2A]">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Created At</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Created At</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                <th className="px-6 py-3 text-right text-xs font-medium text-gray-400 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
+            <tbody className="divide-y divide-[#2A2A2A]">
               {apiKeys.map((key) => (
-                <tr key={key.name}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{key.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                <tr key={key.name} className="hover:bg-[#2A2A2A]">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-white">{key.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-400">
                     {new Date(key.createdAt).toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                    <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-[#002E1F] text-[#00E599]">
                       Active
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => handleDeleteKey(key.name)}
-                      className="text-red-600 hover:text-red-900"
+                      className="text-red-500 hover:text-red-400"
                     >
                       Delete
                     </button>
@@ -168,21 +174,21 @@ const ApiKeysDashboard = () => {
       )}
 
       {isCreateModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4">
+          <div className="bg-[#1A1A1A] rounded-lg p-6 max-w-md w-full border border-[#2A2A2A]">
             {showCreateForm ? (
               <>
-                <h2 className="text-xl font-semibold mb-4">Create New API Key</h2>
+                <h2 className="text-xl font-semibold mb-4 text-white">Create New API Key</h2>
                 <form onSubmit={handleCreateApiKey}>
                   <div className="mb-4">
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-400 mb-2">
                       API Key Name
                     </label>
                     <input
                       type="text"
                       value={newKeyName}
                       onChange={(e) => setNewKeyName(e.target.value)}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      className="w-full px-3 py-2 bg-[#2A2A2A] border border-[#3A3A3A] text-white rounded-md focus:outline-none focus:ring-2 focus:ring-[#00E599] focus:border-transparent"
                       placeholder="Enter API key name"
                       required
                     />
@@ -195,14 +201,14 @@ const ApiKeysDashboard = () => {
                         setNewKeyName('');
                         setShowCreateForm(true);
                       }}
-                      className="px-4 py-2 text-gray-600 hover:text-gray-800"
+                      className="px-4 py-2 text-gray-400 hover:text-white"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={isCreating}
-                      className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:bg-blue-400"
+                      className="px-4 py-2 bg-[#00E599] text-black rounded hover:bg-[#00cc88] disabled:bg-[#2A2A2A] disabled:text-gray-500"
                     >
                       {isCreating ? 'Creating...' : 'Create'}
                     </button>
@@ -211,12 +217,12 @@ const ApiKeysDashboard = () => {
               </>
             ) : (
               <div className="text-center">
-                <h2 className="text-xl font-semibold mb-4">API Key Created Successfully!</h2>
+                <h2 className="text-xl font-semibold mb-4 text-white">API Key Created Successfully!</h2>
                 <div className="mb-6">
-                  <p className="text-sm text-gray-600 mb-2">
+                  <p className="text-sm text-gray-400 mb-2">
                     Copy your API key now. You won't be able to see it again!
                   </p>
-                  <div className="bg-gray-100 p-4 rounded-lg break-all font-mono text-sm">
+                  <div className="bg-[#2A2A2A] p-4 rounded-lg break-all font-mono text-sm text-[#00E599]">
                     {newlyCreatedKey}
                   </div>
                 </div>
@@ -227,7 +233,7 @@ const ApiKeysDashboard = () => {
                     setNewlyCreatedKey('');
                     setShowCreateForm(true);
                   }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="px-4 py-2 bg-[#00E599] text-black rounded hover:bg-[#00cc88]"
                 >
                   Close
                 </button>

@@ -13,10 +13,14 @@ const MENU_ITEMS = {
 export default function Layout({ onLogout }) {
   const [activeMenu, setActiveMenu] = useState(MENU_ITEMS.GET_STARTED);
 
+  const handleNavigation = (menuItem) => {
+    setActiveMenu(menuItem);
+  };
+
   const renderContent = () => {
     switch (activeMenu) {
       case MENU_ITEMS.GET_STARTED:
-        return <GetStarted />;
+        return <GetStarted onNavigate={handleNavigation} menuItems={MENU_ITEMS} />;
       case MENU_ITEMS.WORKSPACES:
         return <WorkspacesDashboard />;
       case MENU_ITEMS.API_KEYS:

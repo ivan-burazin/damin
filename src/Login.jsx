@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Login({ onLogin }) {
+const Login = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -10,67 +10,61 @@ export default function Login({ onLogin }) {
     if (username === 'admin' && password === 'admin') {
       onLogin();
     } else {
-      setError('Invalid username or password');
+      setError('Invalid credentials');
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="max-w-md w-full space-y-8 p-8 bg-white rounded-lg shadow">
-        <div>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+    <div className="min-h-screen bg-[#0D0D0D] flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-[#1A1A1A] rounded-lg shadow-lg border border-[#2A2A2A] p-8">
+        <h2 className="text-2xl font-bold text-white mb-6 text-center">Daytona Dashboard</h2>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">
+              Username
+            </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="w-full px-3 py-2 bg-[#2A2A2A] border border-[#3A3A3A] text-white rounded-md 
+                focus:outline-none focus:ring-2 focus:ring-[#00E599] focus:border-transparent
+                placeholder-gray-500"
+              placeholder="Enter username"
+              required
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">
+              Password
+            </label>
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="w-full px-3 py-2 bg-[#2A2A2A] border border-[#3A3A3A] text-white rounded-md 
+                focus:outline-none focus:ring-2 focus:ring-[#00E599] focus:border-transparent
+                placeholder-gray-500"
+              placeholder="Enter password"
+              required
+            />
+          </div>
           {error && (
-            <div className="bg-red-50 text-red-600 p-3 rounded">
+            <div className="p-3 bg-red-900/20 border border-red-900/20 text-red-500 rounded-md text-sm">
               {error}
             </div>
           )}
-          <div className="rounded-md shadow-sm -space-y-px">
-            <div>
-              <label htmlFor="username" className="sr-only">
-                Username
-              </label>
-              <input
-                id="username"
-                name="username"
-                type="text"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </div>
-            <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
-              <input
-                id="password"
-                name="password"
-                type="password"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
-          </div>
-
-          <div>
-            <button
-              type="submit"
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Sign in
-            </button>
-          </div>
+          <button
+            type="submit"
+            className="w-full px-4 py-2 bg-[#00E599] text-black rounded hover:bg-[#00cc88] 
+              font-medium transition-colors"
+          >
+            Sign In
+          </button>
         </form>
       </div>
     </div>
   );
-} 
+};
+
+export default Login; 
